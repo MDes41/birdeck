@@ -1,4 +1,4 @@
-var API= 'http://localhost:3000';
+var API= 'https://turing-birdie.herokuapp.com';
 
 $(document).ready(function(){
 	var latest_post = document.getElementById('latest-posts');
