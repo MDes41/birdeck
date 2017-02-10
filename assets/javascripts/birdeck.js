@@ -20,10 +20,6 @@ $(document).ready(function(){
 		});
 	};
 
-	getPosts();
-
-
-
 	var showPost = function(){
 		var latest_post = document.getElementById('latest-posts')
 		var input = document.getElementById('show-form-input').value
@@ -44,27 +40,8 @@ $(document).ready(function(){
 			console.error(err);
 		});
 	}
-
+	document.getElementById('button-fetch').addEventListener('click', getPosts)
 	document.getElementById("show-form-submit").addEventListener("click", showPost)
-
-// 	var API = 'http://localhost:3000';
-
-// $(document).ready(function(){
-// 	  var getPosts = function() {
-// 	    return $.ajax({
-// 	      url: API + '/api/v1/posts',
-// 	      method: 'GET',
-// 	    }).done(function(data){
-// 	      for (var i = 0; i < data.length; i++) {
-// 	        $('#latest-posts').append('<p class="post">' + data[i].description + '</p>');
-// 	      }
-// 	    }).fail(function(error){
-// 	      console.error(err);
-// 	    });
-// 	  };
-
-//   // on page load
-// 	  getPosts();
 
   // #tabs for CRUD actions activated
   $( "#tabs" ).tabs();
