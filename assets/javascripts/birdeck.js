@@ -6,7 +6,7 @@ $(document).ready(function(){
 	var createPost = function(data) {
 		var paragraph = document.createElement('p');
 		paragraph.className = 'post';
-		var node = document.createTextNode(data.description)
+		var node = document.createTextNode(data.id + '- ' + data.description)
 		paragraph.appendChild(node)
 		return paragraph
 	}
@@ -77,6 +77,22 @@ $(document).ready(function(){
 		})
 	}
 
+		var getDelete = function() {
+		var inputId = document.getElementById('delete-id').value;
+		clearPosts();
+		return $.ajax({
+			url: API + '/api/v1/posts/' + inputId,
+			method: 'post',
+			data: { _method: 'delete' }
+		}).done(function(data){
+			getPosts();
+		}).fail(function(error){
+			console.error(err);
+		})
+	}
+
+
+	document.getElementById('delete-submit').addEventListener('click', getDelete)
 	document.getElementById('post-submit').addEventListener('click', getPost)
 	document.getElementById('update-submit').addEventListener('click', getUpdate)
 	document.getElementById('button-fetch').addEventListener('click', getPosts)
