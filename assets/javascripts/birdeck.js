@@ -20,10 +20,18 @@ $(document).ready(function(){
 		});
 	};
 
+	var createPost = function(data) {
+		var paragraph = document.createElement('p');
+		paragraph.className = 'post';
+		var node = document.createTextNode(data.description)
+		paragraph.appendChild(node)
+		return paragraph
+	}
+
 	var showPost = function(){
-		var latest_post = document.getElementById('latest-posts')
-		var input = document.getElementById('show-form-input').value
-		var paras = document.getElementsByClassName('post')
+		var latest_post = document.getElementById('latest-posts');
+		var input = document.getElementById('show-form-input').value;
+		var paras = document.getElementsByClassName('post');
 		while(paras[0]){
 			paras[0].parentNode.removeChild(paras[0])
 		}
@@ -31,15 +39,31 @@ $(document).ready(function(){
 			url: API + '/api/v1/posts/' + input,
 			method: 'get'
 		}).done(function(data){
-			var paragraph = document.createElement('p');
-			paragraph.className = 'post'
-			var node = document.createTextNode(data.description);
-			paragraph.appendChild(node);
+			var paragraph = createPost(data)
 			latest_post.appendChild(paragraph);
 		}).fail(function(error){
 			console.error(err);
 		});
 	}
+
+	var getPost = function() {
+		var latest_post = document.getElementById('latest-posts');
+		var input = document.getElementById('post-input').value;
+		var paras = document.getElementsByClassName('posts')
+		return $.ajax({
+			url: API + '/api/v1/posts',
+			type: 'post',
+			data: {post: {description: input} }
+		}).done(function(data){
+			var paragraph = createPost(data)
+			latest_post.appendChild(paragraph)
+		}).fail(function(error){
+			console.error(err);
+		})
+
+	}
+
+	document.getElementById('post-submit').addEventListener('click', getPost)
 	document.getElementById('button-fetch').addEventListener('click', getPosts)
 	document.getElementById("show-form-submit").addEventListener("click", showPost)
 
