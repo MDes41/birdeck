@@ -60,10 +60,25 @@ $(document).ready(function(){
 		}).fail(function(error){
 			console.error(err);
 		})
+	}
 
+	var getUpdate = function() {
+		var inputId = document.getElementById('update-id').value;
+		var inputDescription = document.getElementById('update-description').value;
+		clearPosts();
+		return $.ajax({
+			url: API + '/api/v1/posts/' + inputId,
+			method: 'post',
+			data: { _method: 'PATCH', post: {description: inputDescription} }
+		}).done(function(data){
+			latest_post.appendChild(createPost(data))
+		}).fail(function(error){
+			console.error(err);
+		})
 	}
 
 	document.getElementById('post-submit').addEventListener('click', getPost)
+	document.getElementById('update-submit').addEventListener('click', getUpdate)
 	document.getElementById('button-fetch').addEventListener('click', getPosts)
 	document.getElementById("show-form-submit").addEventListener("click", showPost)
 
